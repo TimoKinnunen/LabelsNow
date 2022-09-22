@@ -1,0 +1,171 @@
+﻿<Page
+    x:Class="LabelsNow.Views.DatabasePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="Narrow">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="PageTitleTextBlock.Margin" Value="0,0,0,0"/>
+                        <Setter Target="PageContentScrollViewer.Margin" Value="0,0,0,0"/>
+                        <Setter Target="AppBarButtonScrollViewer.Margin" Value="0,0,0,0"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Wide">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="720"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="PageTitleTextBlock.Margin" Value="12,0,0,0"/>
+                        <Setter Target="PageContentScrollViewer.Margin" Value="24,0,0,0"/>
+                        <Setter Target="AppBarButtonScrollViewer.Margin" Value="24,0,0,0"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <TextBlock x:Name="PageTitleTextBlock" 
+                   Grid.Row="0" 
+                   Style="{StaticResource TitleTextBlockStyle}" 
+                   Text="Database"/>
+
+        <ScrollViewer x:Name="AppBarButtonScrollViewer"
+                      Grid.Row="1">
+            <StackPanel x:Name="AppBarButtonStackPanel"
+                        Orientation="Horizontal">
+                <AppBarButton x:Name="HomeAppBarButton"
+                              Tapped="HomeAppBarButton_Tapped"
+                              Label="Home"
+                              Icon="Home"/>
+            </StackPanel>
+        </ScrollViewer>
+
+        <ScrollViewer x:Name="PageContentScrollViewer"
+                      Grid.Row="2"
+                      Style="{StaticResource PageContentScrollViewerStyle}">
+
+            <StackPanel x:Name="PageContentStackPanel">
+
+                <!--page content goes here-->
+                <TextBlock x:Name="OutputTextBlock"
+                           Style="{ThemeResource BodyTextBlockStyle}"
+                           Text="Database contains 0 addresses."
+                           TextWrapping="WrapWholeWords"
+                           Margin="0,8"/>
+
+                <ProgressBar x:Name="DatabasePageProgressRing"
+                             HorizontalAlignment="Stretch"
+                             Visibility="Collapsed"/>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button x:Name="BackupAddressesAsJsonButton"
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            HorizontalAlignment="Stretch"
+                            Content="Backup addresses as JSON .json-file"
+                            Tapped="BackupAddressesAsJsonButton_Tapped"
+                            Margin="0,8"/>
+
+                    <Button x:Name="RestoreBackupFromJsonButton"
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            HorizontalAlignment="Stretch"
+                            Content="Restore backup from JSON .json-file"
+                            Tapped="RestoreBackupFromJsonButton_Tapped"
+                            Margin="0,8"/>
+
+                    <Button x:Name="SaveAddressesAsTabDelimitedTxtButton"
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            HorizontalAlignment="Stretch"
+                            Content="Save addresses as (Unicode Text) tab-delimited .txt-file"
+                            Tapped="SaveAddressesAsTabDelimitedTxtButton_Tapped"
+                            Margin="0,8"/>
+
+                    <TextBlock x:Name="TipExcelTextBlock"
+                               Grid.Row="3"
+                               Style="{ThemeResource SmallTextBlockStyle}"
+                               HorizontalAlignment="Center"
+                               Text="Tip: You can import to Excel (Unicode Text) tab-delimited .txt-file."
+                               TextWrapping="WrapWholeWords"/>
+
+                    <Button x:Name="ReadAddressesFromTabDelimitedTxtButton"
+                            Grid.Row="4"
+                            Grid.Column="0"
+                            HorizontalAlignment="Stretch"
+                            Content="Read addresses from (Unicode Text) tab-delimited .txt-file"
+                            Tapped="ReadAddressesFromTabDelimitedTxtButton_Tapped"
+                            Margin="0,8"/>
+
+                    <TextBlock x:Name="TipTextBlock"
+                               Grid.Row="5"
+                               Style="{ThemeResource SmallTextBlockStyle}"
+                               HorizontalAlignment="Center"
+                               Text="Tip: If you export from Excel to tab-delimited .txt-file, choose 'Unicode Text' and NOT 'Text (Tab-delimited)'."
+                               TextWrapping="WrapWholeWords"/>
+
+                    <Button x:Name="DeleteAllAddressesInDatabaseButton"
+                            Grid.Row="6"
+                            Grid.Column="0"
+                            HorizontalAlignment="Stretch"
+                            Content="Delete all addresses in database"
+                            Tapped="DeleteAllAddressesInDatabaseButton_Tapped"
+                            Margin="0,8"/>
+
+                    <StackPanel x:Name="DatabaseInfoStackPanel"
+                                Grid.Row="7"
+                                Margin="0,24,0,0"
+                                HorizontalAlignment="Left">
+
+                        <TextBlock Text="SQLite database is sqlite-net-pcl by Frank A. Krueger version 1.5.231." 
+                                   Style="{ThemeResource SmallTextBlockStyle}"/>
+
+                        <TextBlock Style="{ThemeResource SmallTextBlockStyle}"
+                                   Text="Database location is .../LocalState/LabelsNow.sqlite."/>
+
+                        <TextBlock Style="{ThemeResource SmallTextBlockStyle}"
+                                   Text="Database table 'LabelAddresses' consists of one class 'LabelAddress' with string properties."/>
+
+                        <TextBlock Style="{ThemeResource SmallTextBlockStyle}"
+                                   Text="Guid (primary key), Line1, Line2, Line3, Line4, Line5, Line6, Line7, Line8."/>
+
+                        <TextBlock Style="{ThemeResource SmallTextBlockStyle}"
+                                   Text="Guid property can contain anything unique but here it contains Guid as string."/>
+
+                    </StackPanel>
+                </Grid>
+
+                <!--page content goes here-->
+
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>
+
+

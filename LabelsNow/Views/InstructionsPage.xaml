@@ -1,0 +1,106 @@
+﻿<Page
+    x:Class="LabelsNow.Views.InstructionsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="Narrow">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="PageTitleTextBlock.Margin" Value="0,0,0,0"/>
+                        <Setter Target="PageContentScrollViewer.Margin" Value="0,0,0,0"/>
+                        <Setter Target="AppBarButtonScrollViewer.Margin" Value="0,0,0,0"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Wide">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="720"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="PageTitleTextBlock.Margin" Value="12,0,0,0"/>
+                        <Setter Target="PageContentScrollViewer.Margin" Value="24,0,0,0"/>
+                        <Setter Target="AppBarButtonScrollViewer.Margin" Value="24,0,0,0"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <TextBlock x:Name="PageTitleTextBlock" 
+                   Grid.Row="0" 
+                   Style="{StaticResource TitleTextBlockStyle}" 
+                   Text="Instructions"/>
+
+        <ScrollViewer x:Name="AppBarButtonScrollViewer"
+                      Grid.Row="1">
+            <StackPanel x:Name="AppBarButtonStackPanel"
+                        Orientation="Horizontal">
+                <AppBarButton x:Name="HomeAppBarButton"
+                              Tapped="HomeAppBarButton_Tapped"
+                              Label="Home"
+                              Icon="Home"/>
+            </StackPanel>
+        </ScrollViewer>
+
+        <ScrollViewer x:Name="PageContentScrollViewer"
+                      Grid.Row="2"
+                      Style="{StaticResource PageContentScrollViewerStyle}">
+            <StackPanel x:Name="PageContentStackPanel">
+
+                <!--page content goes here-->
+                <TextBlock Style="{StaticResource SubTitleTextBlockStyle}">Home page</TextBlock>
+                <TextBlock Style="{StaticResource BodyTextBlockStyle}">
+                    You see paper size IsoA4 with orientation Portrait, to start with. Here you change properties of address labels on paper like 8 rows and 3 columns on paper, font size, font color, font weight and margins of paper and margins of label.
+                    You can divide a paper up to 20 rows and 20 columns. Font size can be set to between 6 px and 100 px. You adjust text position on label by adjusting margins of label. A label can contain up to 8 rows (lines).
+                    Almost never you have to adjust margins of paper because it is in the nature of address labels that they don't need no 'edges' on paper.
+                </TextBlock>
+
+                <TextBlock Style="{StaticResource SubTitleTextBlockStyle}">How to change paper size and orientation?</TextBlock>
+                <TextBlock Style="{StaticResource BodyTextBlockStyle}">
+                    Use the Print preview button to preview and to print pages. In the Print preview window change paper size and orientation and cancel Print preview!
+                </TextBlock>
+                <TextBlock Style="{StaticResource BodyTextBlockStyle}">
+                    In this manner paper size and orientation are changed on Home page! It is magic. Paper size and orientation are also changed on Print preview page.
+                </TextBlock>
+                <TextBlock Style="{StaticResource SubTitleTextBlockStyle}">Addresses page</TextBlock>
+                <TextBlock Style="{StaticResource BodyTextBlockStyle}">
+                    Here you add addresses to database and edit existing address in database. Delete selected addresses. Search for addresses containing some text.
+                </TextBlock>
+                <TextBlock Style="{StaticResource SubTitleTextBlockStyle}">Database page</TextBlock>
+                <TextBlock Style="{StaticResource BodyTextBlockStyle}">
+                    Here you make a backup to a .json-file and restore backup. You can delete all addresses in database.
+                </TextBlock>
+                <TextBlock Style="{StaticResource BodyTextBlockStyle}">
+                    Save addresses as (Unicode Text) tab-delimited .txt-file and read addresses from (Unicode Text) tab-delimited .txt-file.
+                </TextBlock>
+                <TextBlock Style="{StaticResource BodyTextBlockStyle}">
+                    You can use Excel and this app with these tab-delimited .txt-files. Export from Excel and import in to Excel. It is useful if you have a lot of addresses in Excel!
+                </TextBlock>
+                <TextBlock Style="{StaticResource BodyTextBlockStyle}">
+                    Tip: If you export from Excel to tab-delimited .txt-file, choose 'Unicode Text' and NOT 'Text (Tab-delimited)'.
+                    'Text (Tab-delimited)' uses Windows-1252 encoded text and this app accepts Unicode(UTF-8) encoded text.
+                </TextBlock>
+
+                <TextBlock Style="{StaticResource SubTitleTextBlockStyle}">You can print to .pdf-file from this app (NOT RECOMMENDED)</TextBlock>
+                <TextBlock Style="{StaticResource BodyTextBlockStyle}">
+                    This approach will RUIN the meaning of this app! Don't print to .pdf-file from this app!
+                    I printed address labels to .pdf-file. Opened .pdf-file and printed it to printer. I noted that margins were automatically adjusted and INCREASED! Lesson learned: Print to printer.
+                </TextBlock>
+
+                <!--page content goes here-->
+
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>
+

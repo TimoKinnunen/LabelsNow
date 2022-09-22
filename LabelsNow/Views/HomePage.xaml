@@ -1,0 +1,237 @@
+﻿<Page
+    x:Class="LabelsNow.Views.HomePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:models="using:LabelsNow.Models"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="Narrow">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="PageTitleTextBlock.Margin" Value="0,0,0,0"/>
+                        <Setter Target="PageContentStackPanel.Margin" Value="0,0,0,0"/>
+                        <Setter Target="PageContentScrollViewer.Margin" Value="0,0,0,0"/>
+                        <Setter Target="ColorsWillHelpYouTextBlock.Margin" Value="0,0,0,0"/>
+                        <Setter Target="AppBarButtonScrollViewer.Margin" Value="0,0,0,0"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Wide">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="720"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="PageTitleTextBlock.Margin" Value="12,0,0,0"/>
+                        <Setter Target="PageContentStackPanel.Margin" Value="24,0,0,0"/>
+                        <Setter Target="PageContentScrollViewer.Margin" Value="24,0,0,0"/>
+                        <Setter Target="ColorsWillHelpYouTextBlock.Margin" Value="24,0,0,0"/>
+                        <Setter Target="AppBarButtonScrollViewer.Margin" Value="24,0,0,0"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <TextBlock x:Name="PageTitleTextBlock" 
+                   Grid.Row="0" 
+                   Style="{StaticResource TitleTextBlockStyle}" 
+                   Text="Home"/>
+
+        <ScrollViewer x:Name="AppBarButtonScrollViewer"
+                      Grid.Row="1">
+            <StackPanel x:Name="AppBarButtonStackPanel"
+                        Orientation="Horizontal">
+                <AppBarButton x:Name="HomeAppBarButton"
+                              Tapped="HomeAppBarButton_Tapped"
+                              Label="Home"
+                              Icon="Home"/>
+                <AppBarButton x:Name="PaperSettingsAppBarButton"
+                              Tapped="PaperSettingsAppBarButton_Tapped"
+                              Label="Hide paper settings"
+                              Icon="Switch"/>
+                <AppBarButton x:Name="LabelSettingsAppBarButton"
+                              Tapped="LabelSettingsAppBarButton_Tapped"
+                              Label="Hide label settings"
+                              Icon="Switch"/>
+                <AppBarButton x:Name="PrintAppBarButton"
+                              Tapped="PrintAppBarButton_Tapped"
+                              Label="Print preview"
+                              Icon="Print"/>
+                <AppBarButton x:Name="HelpAppBarButton"
+                              Tapped="HelpAppBarButton_Tapped"
+                              Label="Change paper size"
+                              Icon="Help"/>
+            </StackPanel>
+        </ScrollViewer>
+
+        <StackPanel x:Name="PageContentStackPanel"
+                    Grid.Row="2">
+
+            <!--page content goes here-->
+
+            <StackPanel x:Name="PaperSizeStackPanel"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Orientation="Horizontal">
+                <TextBlock x:Name="PaperSizeTextBlock"
+                           Style="{StaticResource SmallTextBlockStyle}"
+                           Text="Paper width is 0.0 cm and height is 0.0 cm."
+                           Margin="0,8,8,8"/>
+            </StackPanel>
+            <StackPanel x:Name="PaperLabelSizeStackPanel"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top">
+                <TextBlock x:Name="LabelSizeTextBlock"
+                           Style="{StaticResource SmallTextBlockStyle}"
+                           Text="Label width is 0.0 mm and height is 0.0 mm."
+                           Margin="0,8,8,8"/>
+            </StackPanel>
+            <StackPanel x:Name="PaperNumberRowsAndColumnsStackPanel"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Orientation="Horizontal">
+                <ComboBox Name="PaperNumberOfLabelRowsComboBox"
+                          Style="{StaticResource ComboBoxStyle}"
+                          SelectionChanged="PaperNumberOfLabelRowsComboBox_SelectionChanged"
+                          Header="Number of label rows is 8."
+                          Margin="0,8,8,8">
+                </ComboBox>
+                <ComboBox Name="PaperNumberOfLabelColumnsComboBox"
+                          Style="{StaticResource ComboBoxStyle}"
+                          SelectionChanged="PaperNumberOfLabelColumnsComboBox_SelectionChanged"
+                          Header="Number of label columns is 3."
+                          Margin="0,8,8,8">
+                </ComboBox>
+            </StackPanel>
+            <StackPanel x:Name="PaperFontFamilyNameStackPanel"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Orientation="Horizontal">
+                <ComboBox Name="PaperFontFamilyNameComboBox"
+                          Style="{StaticResource ComboBoxStyle}"
+                          SelectionChanged="PaperFontFamilyNameComboBox_SelectionChanged"
+                          Header="Font name is 'Segoe UI'."
+                          Margin="0,8,8,8">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate x:DataType="models:NamedFontFamily">
+                            <TextBlock FontFamily="{x:Bind FontFamily}" Text="{x:Bind PaperFontFamilyName}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <Slider x:Name="PaperFontSizeSlider" 
+                        Style="{StaticResource SliderStyle}"
+                        Value="12"
+                        Header="Font size is 12 px."
+                        ValueChanged="PaperFontSizeSlider_ValueChanged"/>
+            </StackPanel>
+            <StackPanel x:Name="PaperDatabaseAdressesStackPanel"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Orientation="Horizontal">
+                <TextBlock x:Name="NumberOfDatabaseAddressesTextBlock"
+                           Style="{StaticResource SmallTextBlockStyle}"
+                           Text="Database contains 2 addresses / 1 labels per page = 2 pages."
+                           Margin="0,8,8,8"/>
+            </StackPanel>
+            <StackPanel x:Name="PaperMarginStackPanel"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Orientation="Horizontal">
+                <Slider x:Name="PaperLeftAndRightMarginSlider" 
+                        Style="{StaticResource SliderStyle}"
+                        Value="0"
+                        Header="Paper left and right margin is 0.0 mm."
+                        ValueChanged="PaperLeftAndRightMarginSlider_ValueChanged"/>
+                <Slider x:Name="PaperTopAndBottomMarginSlider" 
+                        Style="{StaticResource SliderStyle}"
+                        Value="0"
+                        Header="Paper top and bottom margin is 0.0 mm."
+                        ValueChanged="PaperTopAndBottomMarginSlider_ValueChanged"/>
+            </StackPanel>
+            <StackPanel x:Name="PaperColorAndWeightStackPanel"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Orientation="Horizontal">
+                <ComboBox Name="PaperFontColorNameComboBox"
+                          Style="{StaticResource ComboBoxStyle}"
+                          SelectionChanged="PaperFontColorNameComboBox_SelectionChanged"
+                          Header="Font color name is 'Black'."
+                          Margin="0,8,8,8">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate x:DataType="models:NamedColor">
+                            <StackPanel Orientation="Horizontal">
+                                <Rectangle Width="20" Fill="{x:Bind SolidColorBrush}" VerticalAlignment="Stretch"/>
+                                <TextBlock Text="{x:Bind ColorName}" Padding="4,0,0,0"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <ComboBox Name="PaperFontWeightNameComboBox"
+                          Style="{StaticResource ComboBoxStyle}"
+                          SelectionChanged="PaperFontWeightNameComboBox_SelectionChanged"
+                          Header="Font weight is 'Normal'."
+                          Margin="0,8,8,8">
+                </ComboBox>
+            </StackPanel>
+            <StackPanel x:Name="LabelTopStackPanel"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Orientation="Horizontal">
+                <Slider x:Name="LabelTextTopMarginSlider" 
+                        Style="{StaticResource SliderStyle}"
+                        Value="8"
+                        Header="Label text top margin is 0.0 mm."
+                        ValueChanged="LabelTextTopMarginSlider_ValueChanged"/>
+                <Slider x:Name="LabelTextBottomMarginSlider" 
+                        Style="{StaticResource SliderStyle}"
+                        Value="10"
+                        Header="Label text bottom margin is 0.0 mm."
+                        ValueChanged="LabelTextBottomMarginSlider_ValueChanged"/>
+            </StackPanel>
+            <StackPanel x:Name="LabelBottomStackPanel"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Orientation="Horizontal">
+                <Slider x:Name="LabelTextLeftMarginSlider" 
+                        Style="{StaticResource SliderStyle}"
+                        Value="20"
+                        Header="Label text left margin is 0.0 mm."
+                        ValueChanged="LabelTextLeftMarginSlider_ValueChanged"/>
+                <Slider x:Name="LabelTextRightMarginSlider" 
+                        FlowDirection="RightToLeft"
+                        Style="{StaticResource SliderStyle}"
+                        Value="0"
+                        Header="Label text right margin is 0.0 mm."
+                        ValueChanged="LabelTextRightMarginSlider_ValueChanged"/>
+            </StackPanel>
+            <!--page content goes here-->
+
+        </StackPanel>
+
+        <TextBlock x:Name="ColorsWillHelpYouTextBlock"
+                   Style="{StaticResource SmallTextBlockStyle}"
+                   Grid.Row="3"
+                   Text="Colored label border lines will help you and will not be printed to paper. Font color will be printed though."/>
+        <ScrollViewer x:Name="PageContentScrollViewer"
+                      Grid.Row="4"
+                      ScrollViewer.HorizontalScrollMode="Auto"
+                      ScrollViewer.VerticalScrollMode="Auto"
+                      Style="{StaticResource PageContentScrollViewerStyle}">
+
+            <StackPanel x:Name="PrintableAreaStackPanel"/>
+        </ScrollViewer>
+        <Canvas x:Name="PrintCanvas" Opacity="0"/>
+    </Grid>
+</Page>

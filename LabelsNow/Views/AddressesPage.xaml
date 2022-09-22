@@ -1,0 +1,314 @@
+﻿<Page
+    x:Class="LabelsNow.Views.AddressesPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:data="using:LabelsNow.ViewModels"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+        <!-- When using x:Bind, you need to set x:DataType -->
+        <DataTemplate x:DataType="data:LabelAddressViewModel" 
+                      x:Name="AddressListViewTemplate">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0"
+                           Grid.Column="0"
+                           Text="{x:Bind Line1}" 
+                           Style="{ThemeResource BaseTextBlockStyle}"
+                           IsTextSelectionEnabled="false"
+                           Margin="12,6,24,0"/>
+                <TextBlock Grid.Row="1"
+                           Grid.Column="0"
+                           Text="{x:Bind Line2}" 
+                           Style="{ThemeResource BodyTextBlockStyle}"
+                           IsTextSelectionEnabled="false"
+                           Margin="12,0,24,6"/>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+
+    <Grid Margin="12,0,0,0">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="Narrow">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="PageTitleTextBlock.Margin" Value="0,0,0,0"/>
+                        <Setter Target="PageContentGrid.Margin" Value="0,0,0,0"/>
+                        <Setter Target="SearchTextBox.Margin" Value="0,0,00"/>
+                        <Setter Target="AppBarButtonScrollViewer.Margin" Value="0,0,0,0"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Wide">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="720"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="PageTitleTextBlock.Margin" Value="12,0,0,0"/>
+                        <Setter Target="PageContentGrid.Margin" Value="24,0,00"/>
+                        <Setter Target="SearchTextBox.Margin" Value="24,0,00"/>
+                        <Setter Target="AppBarButtonScrollViewer.Margin" Value="24,0,0,0"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <TextBlock x:Name="PageTitleTextBlock" 
+                   Grid.Row="0" 
+                   Style="{StaticResource TitleTextBlockStyle}" 
+                   Text="Addresses"/>
+
+        <ScrollViewer x:Name="AppBarButtonScrollViewer"
+                      Grid.Row="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel HorizontalAlignment="Left"
+                            Grid.Column="0"
+                            Orientation="Horizontal">
+                    <AppBarButton x:Name="HomeAppBarButton"
+                                  Tapped="HomeAppBarButton_Tapped"
+                                  Label="Home"
+                                  Icon="Home"
+                                  Margin="12,0,0,0"/>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Right"
+                            Grid.Column="1"
+                            Orientation="Horizontal"
+                            Margin="0,0,24,0">
+                    <CommandBar>
+                        <AppBarButton x:Name="CopyAddressAppBarButton"
+                                      Label="Copy address" 
+                                      Icon="Copy"
+                                      Tapped="CopyAddressAppBarButton_Tapped"/>
+                        <AppBarButton x:Name="EditAddressAppBarButton"
+                                      Label="Edit address" 
+                                      Icon="Edit"
+                                      Tapped="EditAddressAppBarButton_Tapped"/>
+                        <AppBarButton x:Name="SaveAddressAfterEditAppBarButton"
+                                      Label="Save address" 
+                                      Icon="Save"
+                                      Tapped="SaveAddressAfterEditAppBarButton_Tapped"/>
+                        <AppBarButton x:Name="CancelEditAddressAppBarButton"
+                                      Label="Cancel edit address" 
+                                      Icon="Cancel"
+                                      Tapped="CancelEditAddressAppBarButton_Tapped"/>
+                        <AppBarButton x:Name="ShowSearchAppBarButton"
+                                      Tapped="ShowSearchAppBarButton_Tapped"
+                                      Label="Show search"
+                                      Icon="Find"/>
+                        <AppBarButton x:Name="HideSearchAppBarButton"
+                                      Tapped="HideSearchAppBarButton_Tapped"
+                                      Label="Hide search"
+                                      Icon="Find"/>
+                        <AppBarButton x:Name="SelectMultipleAddressesAppBarButton" 
+                                      FontFamily="OverflowCheckGlyph" 
+                                      Label="Select addresses" 
+                                      Tapped="SelectMultipleAddressesAppBarButton_Tapped">
+                            <AppBarButton.Icon>
+                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xe762;" />
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                        <AppBarButton x:Name="CancelSelectMultipleAddressesAppBarButton"
+                                      Label="Cancel select addresses" 
+                                      Icon="Cancel"
+                                      Tapped="CancelSelectMultipleAddressesAppBarButton_Tapped"/>
+                        <AppBarButton x:Name="AddNewAddressAppBarButton"
+                                      Label="Add new address" 
+                                      Icon="Add"
+                                      Tapped="AddNewAddressAppBarButton_Tapped"/>
+                        <AppBarButton x:Name="SaveNewAddressAppBarButton"
+                                      Tapped="SaveNewAddressAppBarButton_Tapped"
+                                      Label="Save new address"
+                                      Icon="Save"/>
+                        <AppBarButton x:Name="CancelNewAddressAppBarButton" 
+                                      Label="Cancel new address" 
+                                      Icon="Cancel"
+                                      Tapped="CancelNewAddressAppBarButton_Tapped"/>
+                        <AppBarButton x:Name="DeleteAddressAppBarButton" 
+                                      Label="Delete address" 
+                                      Icon="Delete"
+                                      Tapped="DeleteAddressAppBarButton_Tapped"/>
+                        <AppBarButton x:Name="DeleteMultipleAddressesAppBarButton"
+                                      Label="Delete selected addresses" 
+                                      Icon="Delete"
+                                      Tapped="DeleteMultipleAddressesAppBarButton_Tapped"/>
+                    </CommandBar>
+                </StackPanel>
+            </Grid>
+
+        </ScrollViewer>
+
+        <!--page content goes here-->
+
+        <StackPanel Grid.Row="2" 
+                    Orientation="Horizontal">
+            <TextBlock x:Name="DatabaseStatusTextBlock"
+                       Style="{ThemeResource SmallTextBlockStyle}"
+                       Text="Database contains 0 addresses."
+                       Margin="0,0,4,0"/>
+            <TextBlock x:Name="RecordStatusTextBlock"
+                       Style="{ThemeResource SmallTextBlockStyle}"
+                       Text="Database contains 0 addresses."
+                       Margin="0,0,2,0"/>
+        </StackPanel>
+
+        <TextBox x:Name="SearchTextBox" 
+                 Grid.Row="3"
+                 Visibility="Collapsed"
+                 TextChanged="SearchTextBox_TextChanged"
+                 Text=""
+                 PlaceholderText="Search..."
+                 Style="{ThemeResource BodyTextBoxStyle}"
+                 Margin="0,0,24,6"/>
+
+        <Grid x:Name="PageContentGrid"
+              Grid.Row="4">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <ProgressBar x:Name="AddressesPageProgressRing"
+                         Grid.Row="0"
+                         Grid.Column="0"
+                         HorizontalAlignment="Stretch"
+                         Margin="4"
+                         Visibility="Collapsed"/>
+
+            <ListView x:Name="MasterListView"
+                      Grid.Row="1"
+                      Grid.Column="0"
+                      SelectionMode="Extended"
+                      IsItemClickEnabled="True"
+                      ShowsScrollingPlaceholders="False"
+                      ItemTemplate="{StaticResource AddressListViewTemplate }"
+                      ItemClick="MasterListView_ItemClick">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
+
+            <ContentPresenter x:Name="DetailContentPresenter"
+                              Grid.Row="1"
+                              Grid.Column="1"
+                              Visibility="Visible"
+                              BorderThickness="1,0,0,0"
+                              Padding="24,0,24,0"
+                              BorderBrush="{ThemeResource SystemControlForegroundBaseLowBrush}"
+                              Content="{x:Bind MasterListView.SelectedItem, Mode=OneWay}">
+                <ContentPresenter.ContentTemplate>
+                    <DataTemplate x:DataType="data:LabelAddressViewModel">
+                        <StackPanel>
+                            <TextBlock Style="{ThemeResource TitleTextBlockStyle}"
+                                       Margin="0,8"
+                                       TextWrapping="WrapWholeWords"
+                                       Text="{x:Bind Line1}"/>
+                            <TextBlock Style="{ThemeResource BodyTextBlockStyle}"
+                                       Margin="0,9" 
+                                       TextWrapping="WrapWholeWords"
+                                       Text="{x:Bind Line2}" />
+                            <TextBlock Style="{ThemeResource BodyTextBlockStyle}" 
+                                       Margin="0,9" 
+                                       TextWrapping="WrapWholeWords"
+                                       Text="{x:Bind Line3}" />
+                            <TextBlock Style="{ThemeResource BodyTextBlockStyle}" 
+                                       Margin="0,9" 
+                                       TextWrapping="WrapWholeWords"
+                                       Text="{x:Bind Line4}" />
+                            <TextBlock Style="{ThemeResource BodyTextBlockStyle}" 
+                                       Margin="0,9" 
+                                       TextWrapping="WrapWholeWords"
+                                       Text="{x:Bind Line5}" />
+                            <TextBlock Style="{ThemeResource BodyTextBlockStyle}" 
+                                       Margin="0,9" 
+                                       TextWrapping="WrapWholeWords"
+                                       Text="{x:Bind Line6}" />
+                            <TextBlock Style="{ThemeResource BodyTextBlockStyle}" 
+                                       Margin="0,9" 
+                                       TextWrapping="WrapWholeWords"
+                                       Text="{x:Bind Line7}" />
+                            <TextBlock Style="{ThemeResource BodyTextBlockStyle}" 
+                                       Margin="0,9" 
+                                       TextWrapping="WrapWholeWords"
+                                       Text="{x:Bind Line8}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ContentPresenter.ContentTemplate>
+                <ContentPresenter.ContentTransitions>
+                    <TransitionCollection/>
+                </ContentPresenter.ContentTransitions>
+            </ContentPresenter>
+
+            <StackPanel x:Name="AddNewAddressStackPanel"
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Visibility="Collapsed"
+                        BorderThickness="1,0,0,0"
+                        Padding="24,0,24,0"
+                        BorderBrush="{ThemeResource SystemControlForegroundBaseLowBrush}">
+                <TextBox x:Name="Line1TextBox" 
+                         Style="{ThemeResource TitleTextBoxStyle}"
+                         Margin="0,8"
+                         PlaceholderText="Line1 is mandatory"/>
+                <TextBox x:Name="Line2TextBox"
+                         Style="{ThemeResource BodyTextBoxStyle}"
+                         Margin="0,9" 
+                         PlaceholderText="Line2"/>
+                <TextBox x:Name="Line3TextBox"
+                         Style="{ThemeResource BodyTextBoxStyle}" 
+                         Margin="0,9" 
+                         PlaceholderText="Line3"/>
+                <TextBox x:Name="Line4TextBox"
+                         Style="{ThemeResource BodyTextBoxStyle}" 
+                         Margin="0,9" 
+                         PlaceholderText="Line4"/>
+                <TextBox x:Name="Line5TextBox"
+                         Style="{ThemeResource BodyTextBoxStyle}" 
+                         Margin="0,9" 
+                         PlaceholderText="Line5"/>
+                <TextBox x:Name="Line6TextBox"
+                         Style="{ThemeResource BodyTextBoxStyle}" 
+                         Margin="0,9" 
+                         PlaceholderText="Line6"/>
+                <TextBox x:Name="Line7TextBox"
+                         Style="{ThemeResource BodyTextBoxStyle}" 
+                         Margin="0,9" 
+                         PlaceholderText="Line7"/>
+                <TextBox x:Name="Line8TextBox"
+                         Style="{ThemeResource BodyTextBoxStyle}" 
+                         Margin="0,9" 
+                         PlaceholderText="Line8"/>
+            </StackPanel>
+
+        </Grid>
+
+        <!--page content goes here-->
+    </Grid>
+</Page>
+
